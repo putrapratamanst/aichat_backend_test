@@ -2,6 +2,7 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -13,4 +14,4 @@
 |
 */
 
-$router->get("customer-eligible-check/{customerId}", "CustomerController@customerEligibleCheck");
+$router->get("customer-eligible-check/{customerId}", "\App\Http\Controllers\CustomerController@customerEligibleCheck");

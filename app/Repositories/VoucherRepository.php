@@ -20,7 +20,7 @@ class VoucherRepository
         $this->selectedField = $selectedField;
     }
 
-    public function detail()
+    public function listVoucher()
     {
         return Voucher::select($this->selectedField)
             ->where('customer_id', $this->customerId)
@@ -33,9 +33,20 @@ class VoucherRepository
     {
         return Voucher::select($this->selectedField)
             ->where('is_locked', Constant::VOUCHER_GENERATED)
-            ->where('customer_id',NULL)
-            ->where('submission_time',NULL)
-            ->where('lockdown_time',NULL)
+            ->where('customer_id', NULL)
+            ->where('submission_time', NULL)
+            ->where('lockdown_time', NULL)
+            ->whereRaw("!FIND_IN_SET({$this->customerId},exception)")
             ->first();
+    }
+
+    public function listUsed()
+    {
+        return Voucher::select($this->selectedField)
+            ->where('is_locked', '!=', Constant::VOUCHER_GENERATED)
+            ->where('customer_id', '!=', NULL)
+            ->where('submission_time', '!=', NULL)
+            ->where('lockdown_time', '!=', NULL)
+            ->get();
     }
 }

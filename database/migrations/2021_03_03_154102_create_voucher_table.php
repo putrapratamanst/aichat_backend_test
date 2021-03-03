@@ -20,6 +20,7 @@ class CreateVoucherTable extends Migration
             $table->string("is_locked");
             $table->dateTime("submission_time")->nullable();
             $table->dateTime("lockdown_time")->nullable();
+            $table->text("exception")->nullable();
         });
     }
 

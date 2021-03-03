@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\VoucherJob;
 use App\Traits\CustomerTrait;
 use App\Traits\PurchaseTransactionTrait;
 use App\Traits\VoucherTrait;
@@ -36,20 +37,19 @@ class CustomerController extends Controller
         if($totalTransaction < 100)
             throw new Exception("Total transactions must be equal or more than $100");
     
-        $checkVoucher = $this->detailVoucher($customerId, ['*']);
+        $checkVoucher = $this->listVoucherByCustomer($customerId, ['*']);
         if(count($checkVoucher) > 0)
             throw new Exception("Each customer is allowed to redeem 1 cash voucher only");
         
         //lock voucher for this customer
-        $availableVoucher = $this->availableVoucher(['*']);
+        $availableVoucher = $this->availableVoucher($customerId, ['*']);
+        if(!$availableVoucher)
+            throw new Exception("Voucher has been empty");
+
         $this->lockVoucher($customerId, $availableVoucher);
         return response()->json([
             'status'  => "success",
-            "message" => "Successfully Get Data Voucher",
-            "data"    => [
-                "voucherCode" => $availableVoucher['code'],
-                "lockdownTime" => $availableVoucher['lockdown_time']
-            ]
+            "message" => "Voucher has been locked down a voucher for 10 minutes to this customer.",
         ]);
     }
 }

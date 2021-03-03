@@ -23,7 +23,8 @@ class VoucherSeeder extends Seeder
             DB::table('voucher')->insert([
                 'code'      => $faker->regexify("[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}"),
                 'is_locked' => false,
-                'submission_time' => "00:00:00",
+                'submission_time' => NULL,
+                'lockdown_time' => NULL,
             ]);
         }
     }

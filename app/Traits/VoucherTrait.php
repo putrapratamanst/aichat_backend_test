@@ -8,19 +8,27 @@ use Illuminate\Support\Carbon;
 
 trait VoucherTrait
 {
-    public static function detailVoucher($customerId, array $selectedField)
+    public static function listVoucherByCustomer($customerId, array $selectedField)
     {
         $repo = new VoucherRepository();
         $repo->setCustomerId($customerId);
         $repo->setSelectedField($selectedField);
-        return $repo->detail();
+        return $repo->listVoucher();
     }
 
-    public static function availableVoucher(array $selectedField)
+    public static function availableVoucher($customerId, array $selectedField)
+    {
+        $repo = new VoucherRepository();
+        $repo->setCustomerId($customerId);
+        $repo->setSelectedField($selectedField);
+        return $repo->available();
+    }
+
+    public static function usedVoucher(array $selectedField)
     {
         $repo = new VoucherRepository();
         $repo->setSelectedField($selectedField);
-        return $repo->available();
+        return $repo->listUsed();
     }
 
     public static function lockVoucher($customerId, $availableVoucher)

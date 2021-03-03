@@ -36,9 +36,11 @@ class VoucherJob extends Job
                 $lockdownTime = Carbon::parse($value->lockdown_time);
                 // $totalDuration = $now->diffInMinutes($lockdownTime);
                 if($now > $lockdownTime) {
-                    $exception = json_decode($value->exception);
-                    array_push($exception, $value->customer_id);
-                    $value->exception       = json_encode($exception); 
+                    $exception = $value->exception;
+                    $exception .= $value->customer_id;
+                    $exception .= ",";
+
+                    $value->exception       = $exception;
                     $value->customer_id     = NULL;
                     $value->submission_time = NULL;
                     $value->lockdown_time   = NULL;

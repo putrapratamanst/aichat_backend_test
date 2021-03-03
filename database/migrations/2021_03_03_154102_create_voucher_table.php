@@ -18,8 +18,8 @@ class CreateVoucherTable extends Migration
             $table->string("code")->unique();
             $table->integer("customer_id")->nullable();
             $table->string("is_locked");
-            $table->time("submission_time")->nullable();
-            $table->time("lockdown_time")->nullable();
+            $table->dateTime("submission_time")->nullable();
+            $table->dateTime("lockdown_time")->nullable();
         });
     }
 

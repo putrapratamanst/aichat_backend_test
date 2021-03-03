@@ -25,6 +25,17 @@ class VoucherRepository
         return Voucher::select($this->selectedField)
             ->where('customer_id', $this->customerId)
             ->where('is_locked', Constant::VOUCHER_ACTIVE)
+            ->orWhere('is_locked', Constant::VOUCHER_SUBMISSION)
             ->get();
+    }
+
+    public function available()
+    {
+        return Voucher::select($this->selectedField)
+            ->where('is_locked', Constant::VOUCHER_GENERATED)
+            ->where('customer_id',NULL)
+            ->where('submission_time',NULL)
+            ->where('lockdown_time',NULL)
+            ->first();
     }
 }

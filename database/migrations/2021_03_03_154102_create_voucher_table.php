@@ -16,6 +16,7 @@ class CreateVoucherTable extends Migration
         Schema::create('voucher', function (Blueprint $table) {
             $table->bigIncrements("id");
             $table->string("code")->unique();
+            $table->integer("customer_id")->nullable();
             $table->string("is_locked");
             $table->time("submission_time")->nullable();
         });

@@ -25,7 +25,7 @@ class VoucherSeeder extends Seeder
                 'is_locked'         => false,
                 'submission_time'   => NULL,
                 'lockdown_time'     => NULL,
-                'exception'         => NULL
+                'exception'         => ""
             ]);
         }
     }

@@ -15,3 +15,4 @@
 */
 
 $router->get("customer-eligible-check/{customerId}", "\App\Http\Controllers\CustomerController@customerEligibleCheck");
+$router->post("validate-photo-submission", "\App\Http\Controllers\PhotoController@validatePhotoSubmission");

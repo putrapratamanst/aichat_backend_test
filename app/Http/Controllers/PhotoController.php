@@ -42,6 +42,16 @@ class PhotoController extends Controller
         if (!$dataCustomer)
             throw new Exception("Data Customer Not Found");
 
+        $hasBeenSubmit = $this->detailHasSubmitVoucher($params['customerId'], ['*']);
+        if ($hasBeenSubmit)
+            return response()->json([
+                'status'  => "success",
+                "message" => "Photo has been submitted and voucher has been generated.",
+                "data"    => [
+                    "voucherCode" => $hasBeenSubmit['code']
+                ]
+            ]);
+
         $dataVoucher = $this->detailVoucher($params['customerId'], ['*']);
         if (!$dataVoucher)
             throw new Exception("Voucher for this customer not found");
@@ -60,12 +70,12 @@ class PhotoController extends Controller
 
         if ($imageRecognition & ($withinRange < env("LOCKDOWN_MINUTES")))
             $this->activateVoucher($dataVoucher);
-            return response()->json([
-                'status'  => "success",
-                "message" => "Voucher has been generated.",
-                "data"    => [
-                    "voucherCode" => $dataVoucher['code']
-                ]
-            ]);
+        return response()->json([
+            'status'  => "success",
+            "message" => "Voucher has been generated.",
+            "data"    => [
+                "voucherCode" => $dataVoucher['code']
+            ]
+        ]);
     }
 }

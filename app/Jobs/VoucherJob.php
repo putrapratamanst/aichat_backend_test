@@ -34,18 +34,8 @@ class VoucherJob extends Job
             foreach ($data as $key => $value) {
                 $now = Carbon::now();
                 $lockdownTime = Carbon::parse($value->lockdown_time);
-                // $totalDuration = $now->diffInMinutes($lockdownTime);
                 if($now > $lockdownTime) {
-                    $exception = $value->exception;
-                    $exception .= $value->customer_id;
-                    $exception .= ",";
-
-                    $value->exception       = $exception;
-                    $value->customer_id     = NULL;
-                    $value->submission_time = NULL;
-                    $value->lockdown_time   = NULL;
-                    $value->is_locked       = Constant::VOUCHER_GENERATED;
-                    $value->save();
+                    $this->setFreeVoucher($value);
                 }
             }
         }

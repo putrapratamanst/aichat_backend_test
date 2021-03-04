@@ -34,7 +34,7 @@ class VoucherJob extends Job
             foreach ($data as $key => $value) {
                 $now = Carbon::now();
                 $lockdownTime = Carbon::parse($value->lockdown_time);
-                if($now > $lockdownTime) {
+                if(($now > $lockdownTime) && ($value->is_locked != Constant::VOUCHER_ACTIVE) ) {
                     $this->setFreeVoucher($value);
                 }
             }

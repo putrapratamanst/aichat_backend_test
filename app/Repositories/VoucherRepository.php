@@ -51,6 +51,16 @@ class VoucherRepository
             ->first();
     }
 
+    public function detailHasSubmit()
+    {
+        return Voucher::select($this->selectedField)
+            ->where('is_locked', Constant::VOUCHER_ACTIVE)
+            ->where('customer_id', $this->customerId)
+            ->where('submission_time','!=', NULL)
+            ->where('lockdown_time', '!=', NULL)
+            ->first();
+    }
+
     public function listUsed()
     {
         return Voucher::select($this->selectedField)

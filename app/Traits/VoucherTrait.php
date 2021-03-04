@@ -39,6 +39,14 @@ trait VoucherTrait
         return $repo->detail();
     }
 
+    public static function detailHasSubmitVoucher($customerId, array $selectedField)
+    {
+        $repo = new VoucherRepository();
+        $repo->setCustomerId($customerId);
+        $repo->setSelectedField($selectedField);
+        return $repo->detailHasSubmit();
+    }
+
     public static function lockVoucher($customerId, $availableVoucher)
     {
         $now = Carbon::now();

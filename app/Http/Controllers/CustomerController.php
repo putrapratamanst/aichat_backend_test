@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\VoucherJob;
 use App\Traits\CustomerTrait;
 use App\Traits\PurchaseTransactionTrait;
 use App\Traits\VoucherTrait;
